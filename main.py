@@ -15,6 +15,7 @@ import sys
 import qbittorrentapi
 import requests
 from urllib.parse import urlparse, parse_qs, unquote
+from os import remove
 
 ## qbittorrent client instantiation, edit to your needs!!
 conn_info = dict(
@@ -66,8 +67,12 @@ def get_magnet():
     #View info 
     torrent_list = dict(qb.torrent_info())
     for k,v in torrent_list:
-        if k == "name" and v == "Agalloch":
+        if k == "name" and v == arg:
             print(k,v)
+
+def cleanup():
+    remove('res.html','rutracker.html')
     
 get_rutracker()
 get_magnet()
+cleanup()
