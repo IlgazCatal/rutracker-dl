@@ -15,7 +15,7 @@ import sys
 import qbittorrentapi
 import requests
 from urllib.parse import urlparse, parse_qs, unquote
-from os import remove
+import os
 
 ## qbittorrent client instantiation, edit to your needs!!
 conn_info = dict(
@@ -64,14 +64,11 @@ def get_magnet():
     #Download 
     qb.torrents_add(urls=str(magnet_list[0]))
 
-    #View info 
-    torrent_list = dict(qb.torrent_info())
-    for k,v in torrent_list:
-        if k == "name" and v == arg:
-            print(k,v)
 
 def cleanup():
-    remove('res.html','rutracker.html')
+    htmls = [h for h in os.listdir() if "res.html" in h and if "rutracker.html" in h]
+    os.remove(htmls[0])
+    os.remove(htmls[1])
     
 get_rutracker()
 get_magnet()
