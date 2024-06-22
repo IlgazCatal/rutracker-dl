@@ -1,13 +1,8 @@
 # rutracker-dl
-rutracker-dl - A Simple Python Utility to Download Music from rutracker.org
+rutracker-dl - A fast, efficient script that downloads music from rutracker.org 
 # Usage
 python3 main.py desired_album
-
-# What does it do?
-To put it simply, rutracker-dl searches for your desired album, grabs the rutracker.org link and retrieves the magnet url needed. 
-After this, it uses the initially instantiated qbittorrent WebUI to download the torrent.
-
 # Requirements
-qbittorrent, qbittorrent-api, requests, BeautifulSoup4
-
-
+qbittorrent, qbittorrent-api, requests, BeautifulSoup4, lxml-parser
+# License
+GPL-v2.0
