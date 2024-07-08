@@ -41,7 +41,7 @@ link = f"https://html.duckduckgo.com/html/?q={arg}" + '+site:rutracker.org'
 response = requests.get(link,headers={'user-agent': 'my-app/0.0.1'})
 
 with open("res.html",'w+') as f: # Saves the text of the response to a html file.
-    if search(f"[{arg}]",response.text):
+    if search(f"{arg}+",response.text):
         f.write(response.text)
         f.close()
 
