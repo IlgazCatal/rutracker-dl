@@ -9,6 +9,7 @@ TODO:
 
 [X] use regex to MATCH the album title 
 [] cleanup code
+[] add torrent viewer 
 
 '''
 
