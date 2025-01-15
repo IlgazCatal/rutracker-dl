@@ -7,6 +7,7 @@ License - GPL v2.0
 '''
 TODO:
 
+[] use btdig to efficiently get magnet links
 [X] use regex to MATCH the album title 
 [] cleanup code
 [] add torrent viewer 
@@ -37,7 +38,7 @@ except qbittorrentapi.LoginFailed as e:
 
 
 arg = argv[1] if len(argv) < 2 else '+'.join(argv[1:]) # Search queries use "+" to seperate words.
-link = f"https://html.duckduckgo.com/html/?q={arg}" + '+site:rutracker.org'
+link = f"https://btdig.com/search?q={arg}" + '+site:rutracker.org'
 
 response = requests.get(link,headers={'user-agent': 'my-app/0.0.1'})
 
@@ -46,38 +47,21 @@ with open("res.html",'w+') as f: # Saves the text of the response to a html file
         f.write(response.text)
         f.close()
 
-def get_html():
+def main():
     with open("res.html") as resp:
         soup = BeautifulSoup(resp,"lxml") # lxml is the fastest parser
         resp.close()
 
-    links = [node.get('href') for node in soup.find_all("a")]
-    url_obj = urlparse(links[2])
+    links = [node.get('href') for node in soup.find_all("a") if "magnet" in node.get('href')]
+    url_obj = urlparse(links[0])
     parsed_url = parse_qs(url_obj.query).get('uddg', '')
     main_url = unquote(parsed_url[0]) 
-    url_content = requests.get(main_url,headers={'user-agent': 'my-app/0.0.1'}).text
-
-    with open("rutracker.html","w+") as f:
-        f.write(url_content)
-        f.close()
-
-def get_magnet():
-    with open("rutracker.html") as r:
-        soup = BeautifulSoup(r,"lxml")
-        r.close()
-
-    #Retrieve magnet url from href tags
-    magnet_url = [node.get('href') for node in soup.find_all("a")]
-    magnet_list = [item for item in magnet_url if 'magnet:' in str(item)]
-
-    #Download 
-    qb.torrents_add(urls=magnet_list[0])
+    qb.torrents_add(urls=main_url)
 
 def cleanup():
     for h in listdir():
         if ".html" in h:
             unlink(h)
 
-get_html()
-get_magnet()
+main()
 cleanup()
