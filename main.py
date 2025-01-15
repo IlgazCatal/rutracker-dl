@@ -7,7 +7,7 @@ License - GPL v2.0
 '''
 TODO:
 
-[] use btdig to efficiently get magnet links
+[] use btdig to efficiently get magnet links (15/01/2021 done away from home, will test when home)
 [X] use regex to MATCH the album title 
 [] cleanup code
 [] add torrent viewer 
