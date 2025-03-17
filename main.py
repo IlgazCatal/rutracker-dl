@@ -58,7 +58,6 @@ def main():
     main_url = unquote(parsed_url[0]) 
     qb.torrents_add(urls=main_url)
 
-def cleanup():
     for h in listdir():
         if ".html" in h:
             unlink(h)
